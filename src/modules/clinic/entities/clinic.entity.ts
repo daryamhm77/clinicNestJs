@@ -2,6 +2,8 @@ import { EntityNames } from 'src/common/enum/entity,enum';
 import { OtpEntity } from 'src/modules/auth/entity/otp.entity';
 import { CategoryEntity } from 'src/modules/category/entities/category.entity';
 import { PlannerEntity } from 'src/modules/planner/entities/planner.entity';
+import { Reservation } from 'src/modules/reservation/entities/reservation.entity';
+import { TransactionEntity } from 'src/modules/transactions/entities/transaction.entity';
 import {
   Column,
   CreateDateColumn,
@@ -60,4 +62,10 @@ export class ClinicEntity {
 
   @OneToMany(() => PlannerEntity, (planners) => planners.clinic)
   planners: PlannerEntity[];
+
+  @OneToMany(() => Reservation, (reservation) => reservation.clinic)
+  reservation: Reservation[];
+
+  @OneToMany(() => TransactionEntity, (transaction) => transaction.clinic)
+  transaction: TransactionEntity;
 }

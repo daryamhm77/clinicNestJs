@@ -9,9 +9,12 @@ import { CategoryEntity } from '../category/entities/category.entity';
 import { CategoryService } from '../category/category.service';
 import { JwtService } from '@nestjs/jwt';
 import { S3Service } from '../s3/s3.service';
+import { CategoryModule } from '../category/category.module';
 
 @Module({
   imports: [
+    AuthModule,
+    CategoryModule,
     TypeOrmModule.forFeature([ClinicEntity, OtpEntity, CategoryEntity]),
   ],
   controllers: [ClinicController],

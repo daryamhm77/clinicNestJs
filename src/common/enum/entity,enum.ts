@@ -4,4 +4,6 @@ export enum EntityNames {
   Clinic = 'clinic',
   Category = 'category',
   Planner = 'planner',
+  Reservation = 'reservation',
+  Payments = 'payments',
 }

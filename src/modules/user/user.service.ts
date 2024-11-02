@@ -33,5 +33,7 @@ export class UserService {
   async findUserByMobile(mobile: string) {
     return this.userRepository.findOneBy({ mobile });
   }
+  async findOneById(id: number) {
+    return await this.userRepository.findOneBy({ id });
+  }
 }
-

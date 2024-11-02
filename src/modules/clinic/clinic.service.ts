@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   BadRequestException,
   ConflictException,
@@ -154,5 +155,8 @@ export class ClinicService {
     } catch (error) {
       throw new UnauthorizedException('login on your account ');
     }
+  }
+  async findOne(id:number){ 
+    return await this.clinicRepository.findOneBy({id});
   }
 }

@@ -19,11 +19,12 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { UploadFileS3 } from 'src/common/interceptors/upload-file.interceptor';
 import { FormType } from 'src/common/enum/form-type.enum';
-import { ApiConsumes } from '@nestjs/swagger';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Pagination } from 'src/common/decorators/pagination.decorator';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('category')
+@ApiTags("Category")
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 

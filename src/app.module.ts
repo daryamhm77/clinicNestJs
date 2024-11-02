@@ -4,8 +4,10 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ClinicModule } from './modules/clinic/clinic.module';
 import { CategoryModule } from './modules/category/category.module';
 import { S3Module } from './modules/s3/s3.module';
-// import { PlannerModule } from './planner/planner.module';
-// import { PlannerModule } from './modules/planner/planner.module';
+import { PlannerModule } from './modules/planner/planner.module';
+import { TransactionsModule } from './modules/transactions/transactions.module';
+import { ReservationModule } from './modules/reservation/reservation.module';
+
 
 
 
@@ -29,7 +31,10 @@ import { S3Module } from './modules/s3/s3.module';
     ClinicModule,
     CategoryModule,
     S3Module,
-    // PlannerModule
+    ReservationModule,
+    TransactionsModule,
+    PlannerModule,
+    TransactionsModule
   ],
   controllers: [],
   providers: [],

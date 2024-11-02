@@ -1,6 +1,9 @@
+import { EntityNames } from 'src/common/enum/entity,enum';
 import { ClinicEntity } from 'src/modules/clinic/entities/clinic.entity';
-import { Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
+
+@Entity(EntityNames.Planner)
 export class PlannerEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
@@ -18,7 +21,7 @@ export class PlannerEntity {
   finishTime: Date;
 
   @Column()
-  status: string;
+  status: boolean;
 
   @ManyToOne(() => ClinicEntity, (clinic) => clinic.planners, {
     onDelete: 'CASCADE',
