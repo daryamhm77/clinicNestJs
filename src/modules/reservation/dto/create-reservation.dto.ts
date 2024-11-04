@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PaymentStatus, ReservationStatus } from '../enum/status.enum';
+import { TransPaymentStatus, ReservationStatus } from '../enum/status.enum';
 import { IsEnum } from 'class-validator';
 
 export class CreateReservationDto {
@@ -23,9 +23,9 @@ export class CreateReservationDto {
   status: ReservationStatus;
 
   @ApiProperty()
-  @IsEnum(PaymentStatus)
-  paymentStatus: PaymentStatus;
+  @IsEnum(TransPaymentStatus)
+  transPaymentStatus: TransPaymentStatus;
 
   @ApiProperty()
-  paymentId: number;
+  transactionId: number;
 }

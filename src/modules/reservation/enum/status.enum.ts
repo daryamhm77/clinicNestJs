@@ -4,7 +4,7 @@ export enum ReservationStatus {
   CANCELED = 'canceled',
 }
 
-export enum PaymentStatus {
+export enum TransPaymentStatus {
   UNPAID = 'unpaid',
   PAID = 'paid',
 }

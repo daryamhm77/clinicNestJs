@@ -8,11 +8,11 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { PaymentStatus, ReservationStatus } from '../enum/status.enum';
+import { TransPaymentStatus, ReservationStatus } from '../enum/status.enum';
 import { TransactionEntity } from 'src/modules/transactions/entities/transaction.entity';
 
 @Entity(EntityNames.Reservation)
-export class Reservation {
+export class ReservationEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -22,13 +22,13 @@ export class Reservation {
   @Column()
   userId: number;
 
-  @Column({type:'timestamp'})
+  @Column({ type: 'timestamp' })
   startVisitTime: Date;
 
-  @Column({type:'timestamp'})
+  @Column({ type: 'timestamp' })
   finishVisitTime: Date;
 
-  @Column({type:'date'})
+  @Column({ type: 'date' })
   date: Date;
 
   @Column({
@@ -38,11 +38,15 @@ export class Reservation {
   })
   status: ReservationStatus;
 
-  @Column({ type: 'enum', enum: PaymentStatus, default: PaymentStatus.UNPAID })
-  paymentStatus: PaymentStatus;
+  @Column({
+    type: 'enum',
+    enum: TransPaymentStatus,
+    default: TransPaymentStatus.UNPAID,
+  })
+  transPaymentStatus: TransPaymentStatus;
 
   @Column()
-  paymentId: number;
+  transactionId: number;
 
   @ManyToOne(() => ClinicEntity, (clinic) => clinic.reservation)
   clinic: ClinicEntity;

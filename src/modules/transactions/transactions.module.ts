@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { TransactionsController } from './transactions.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,7 +13,7 @@ import { ReservationModule } from '../reservation/reservation.module';
     AuthModule,
     ClinicModule,
     UserModule,
-    forwardRef(() => ReservationModule),
+    ReservationModule,
     TypeOrmModule.forFeature([TransactionEntity]),
   ],
   controllers: [TransactionsController],

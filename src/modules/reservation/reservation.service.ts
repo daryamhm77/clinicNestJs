@@ -1,31 +1,29 @@
 import {
   BadRequestException,
-  forwardRef,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Reservation } from './entities/reservation.entity';
+import { ReservationEntity } from './entities/reservation.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ClinicService } from '../clinic/clinic.service';
 import { UserService } from '../user/user.service';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
-import { TransactionsService } from '../transactions/transactions.service';
 import { ReservationStatus } from './enum/status.enum';
 import { TransactionEntity } from '../transactions/entities/transaction.entity';
 
 @Injectable()
 export class ReservationService {
   constructor(
-    @InjectRepository(Reservation)
-    private reserveRepository: Repository<Reservation>,
+    @InjectRepository(ReservationEntity)
+    private reserveRepository: Repository<ReservationEntity>,
     @InjectRepository(TransactionEntity)
     private transactionRepository: Repository<TransactionEntity>,
     private clinicService: ClinicService,
     private userService: UserService,
-  ) { }
+   
+  ) {}
 
   async create(reserveDto: CreateReservationDto) {
     const {
@@ -34,8 +32,8 @@ export class ReservationService {
       startVisitTime,
       finishVisitTime,
       date,
-      paymentId,
-      paymentStatus,
+      transactionId,
+      transPaymentStatus,
       status,
     } = reserveDto;
 
@@ -62,20 +60,20 @@ export class ReservationService {
         'The clinic is already booked at the requested time',
       );
     }
-    if (paymentId) {
-      const payment = await this.transactionRepository.findOne({
-        where: { id: paymentId },
+    if (transactionId) {
+      const transaction = await this.transactionRepository.findOne({
+        where: { id: transactionId },
         relations: {
           clinic: true,
           user: true,
           reservation: true,
         },
       });
-      if (!payment) {
-        throw new NotFoundException('Payment not found');
+      if (!transaction) {
+        throw new NotFoundException('Transaction not found');
       }
     }
-
+    
 
     const newReservation = this.reserveRepository.create({
       clinic,
@@ -83,8 +81,8 @@ export class ReservationService {
       startVisitTime,
       finishVisitTime,
       date,
-      paymentStatus,
-      paymentId,
+      transPaymentStatus,
+      transactionId,
       status: status || ReservationStatus.PENDING,
     });
     return await this.reserveRepository.save(newReservation);
@@ -104,8 +102,8 @@ export class ReservationService {
       startVisitTime,
       finishVisitTime,
       date,
-      paymentId,
-      paymentStatus,
+      transactionId,
+      transPaymentStatus,
       status,
     } = reserveDto;
     const reserve = await this.reserveRepository.findOneBy({ id });
@@ -148,15 +146,15 @@ export class ReservationService {
       startVisitTime,
       finishVisitTime,
       date,
-      paymentId,
-      paymentStatus,
+      transactionId,
+      transPaymentStatus,
       status,
     });
   }
   async findOneById(id: number) {
     const reservation = await this.reserveRepository.findOne({
       where: { id },
-      relations: ['clinic', 'user', 'payment'],
+      relations: ['clinic', 'user', 'transaction'],
     });
     if (!reservation) {
       throw new NotFoundException('Reservation not found');
@@ -165,7 +163,7 @@ export class ReservationService {
   }
   async findAll() {
     return await this.reserveRepository.find({
-      relations: ['clinic', 'user', 'payment'],
+      relations: ['clinic', 'user', 'transaction'],
     });
   }
 }

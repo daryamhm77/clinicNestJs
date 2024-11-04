@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { OtpEntity } from '../../auth/entity/otp.entity';
-import { Reservation } from 'src/modules/reservation/entities/reservation.entity';
+import { ReservationEntity } from 'src/modules/reservation/entities/reservation.entity';
 import { TransactionEntity } from 'src/modules/transactions/entities/transaction.entity';
 
 @Entity(EntityNames.User)
@@ -32,8 +32,8 @@ export class UserEntity {
   @JoinColumn()
   otp: OtpEntity;
 
-  @OneToMany(() => Reservation, (reservation) => reservation.user)
-  reservation: Reservation[];
+  @OneToMany(() => ReservationEntity, (reservation) => reservation.user)
+  reservation: ReservationEntity[];
 
   @OneToMany(() => TransactionEntity, (transaction) => transaction.user)
   transaction: TransactionEntity;

@@ -1,6 +1,6 @@
 import { EntityNames } from 'src/common/enum/entity,enum';
 import { ClinicEntity } from 'src/modules/clinic/entities/clinic.entity';
-import { Reservation } from 'src/modules/reservation/entities/reservation.entity';
+import { ReservationEntity } from 'src/modules/reservation/entities/reservation.entity';
 import { UserEntity } from 'src/modules/user/entities/user.entity';
 import {
   Column,
@@ -38,9 +38,9 @@ export class TransactionEntity {
   @Column()
   reservationId: number;
 
-  @ManyToOne(() => Reservation, (reservation) => reservation.transaction)
+  @ManyToOne(() => ReservationEntity, (reservation) => reservation.transaction)
   @JoinColumn({ name: 'reservationId' })
-  reservation: Reservation;
+  reservation: ReservationEntity;
 
   @ManyToOne(() => ClinicEntity, (clinic) => clinic.transaction)
   clinic: ClinicEntity;
