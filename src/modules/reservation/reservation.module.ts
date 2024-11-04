@@ -6,7 +6,7 @@ import { Reservation } from './entities/reservation.entity';
 import { AuthModule } from '../auth/auth.module';
 import { ClinicModule } from '../clinic/clinic.module';
 import { UserModule } from '../user/user.module';
-import { TransactionsModule } from '../transactions/transactions.module';
+import { TransactionEntity } from '../transactions/entities/transaction.entity';
 
 
 @Module({
@@ -14,11 +14,11 @@ import { TransactionsModule } from '../transactions/transactions.module';
     AuthModule,
     ClinicModule,
     UserModule,
-    forwardRef(() => TransactionsModule),
-    TypeOrmModule.forFeature([Reservation]),
+    // TransactionsModule,
+    TypeOrmModule.forFeature([Reservation, TransactionEntity]),
   ],
   controllers: [ReservationController],
   providers: [ReservationService],
   exports: [ReservationService],
 })
-export class ReservationModule {}
+export class ReservationModule { }

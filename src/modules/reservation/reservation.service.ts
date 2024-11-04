@@ -14,16 +14,18 @@ import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { TransactionsService } from '../transactions/transactions.service';
 import { ReservationStatus } from './enum/status.enum';
+import { TransactionEntity } from '../transactions/entities/transaction.entity';
 
 @Injectable()
 export class ReservationService {
   constructor(
     @InjectRepository(Reservation)
     private reserveRepository: Repository<Reservation>,
+    @InjectRepository(TransactionEntity)
+    private transactionRepository: Repository<TransactionEntity>,
     private clinicService: ClinicService,
     private userService: UserService,
-    private transactionService: TransactionsService,
-  ) {}
+  ) { }
 
   async create(reserveDto: CreateReservationDto) {
     const {
@@ -61,12 +63,19 @@ export class ReservationService {
       );
     }
     if (paymentId) {
-      const payment = await this.transactionService.findById(paymentId);
+      const payment = await this.transactionRepository.findOne({
+        where: { id: paymentId },
+        relations: {
+          clinic: true,
+          user: true,
+          reservation: true,
+        },
+      });
       if (!payment) {
         throw new NotFoundException('Payment not found');
       }
     }
-    
+
 
     const newReservation = this.reserveRepository.create({
       clinic,
